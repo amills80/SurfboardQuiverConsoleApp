@@ -16,27 +16,27 @@ namespace SurfboardQuiverConsoleApp
         {
             using (var context = new Context())
             {
-                context.Database.Log = (message) => Debug.WriteLine(message);
+                //context.Database.Log = (message) => Debug.WriteLine(message);
 
-                var surfboards = context.Surfboards
-                    .Include(sb => sb.Builder)
-                    .OrderByDescending(sb => sb.Length).ToList();
+                //var surfboards = context.Surfboards
+                //    .Include(sb => sb.Builder)
+                //    .OrderByDescending(sb => sb.Length).ToList();
 
-                Console.WriteLine("# of boards: {0}", surfboards.Count);
+                //Console.WriteLine("# of boards: {0}", surfboards.Count);
                 
-                var longboards = context.Surfboards
-                    .Include(sb => sb.Style)
-                    .Where(sb => sb.Style.Name.ToLower()=="longboard")
-                    .ToList();
+                //var longboards = context.Surfboards
+                //    .Include(sb => sb.Style)
+                //    .Where(sb => sb.Style.Name.ToLower()=="longboard")
+                //    .ToList();
                 
-                Console.WriteLine("# of longboards: {0}", longboards.Count);
+                //Console.WriteLine("# of longboards: {0}", longboards.Count);
 
-                foreach (var surfboard in surfboards)
-                {
-                    Console.WriteLine(surfboard.DisplayText);
-                }
-                
+                //foreach (var surfboard in surfboards)
+                //{
+                //    Console.WriteLine(surfboard.DisplayText);
+                //}
             }
         }
+        
     }
 }

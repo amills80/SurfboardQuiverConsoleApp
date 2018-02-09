@@ -10,22 +10,18 @@ using System.Threading.Tasks;
 
 namespace SurfboardQuiverConsoleApp
 {
-    class Context : DbContext
+    public class Context : DbContext
     {
-        //// in the base section is where your sql server connection string goes
-        //public Context() : base("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=SurfboardQuiver;Integrated Security=True;MultipleActiveResultSets=True") 
-        //{
-        //}
-
         public Context()
         {
             Database.SetInitializer(new DatabaseInitializer());
             //Database.SetInitializer(new DropCreateDatabaseIfModelChanges<Context>());
             //Database.SetInitializer(new DropCreateDatabaseAlways<Context>());
-
         }
 
         public DbSet<Surfboard> Surfboards { get; set; }
+        public DbSet<Builder> Builders { get; set; }
+        public DbSet<BoardStyle> BoardStyles { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
