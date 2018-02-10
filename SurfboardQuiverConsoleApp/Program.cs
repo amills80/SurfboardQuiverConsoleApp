@@ -201,10 +201,109 @@ namespace SurfboardQuiverConsoleApp
 
         private static void AddSurfboard()
         {
+            ConsoleHelper.ClearOutput();
+            ConsoleHelper.OutputLine("ADD SURFBOARD");
+
+            // List out existing quiver
+            ConsoleHelper.OutputBlankLine();
+            IList<Surfboard> surfBoards = Repository.GetBoards();
+            foreach (Surfboard s in surfBoards)
+            {
+                ConsoleHelper.OutputLine("{0}) {1}", surfBoards.IndexOf(s) + 1, s.DisplayText);
+            }
+            
+            // get values input from user.
+
+            var surfBoard = new Surfboard();
+            //surfBoard.Id = GetBoardId();
+            surfBoard.Builder = GetBuilder();
+            surfBoard.Model = GetModel();
+            surfBoard.Length = GetBoardLength();
+            surfBoard.Style = GetBoardStyle();
+            
+            // Add the surfboard to the database.
+            Repository.AddSurfboard(surfBoard);
+        }
+
+        private static BoardStyle GetBoardStyle()
+        {
             throw new NotImplementedException();
         }
 
+        private static float GetBoardLength()
+        {
+            throw new NotImplementedException();
+        }
+
+        private static string GetModel()
+        {
+            throw new NotImplementedException();
+        }
+
+        private static Builder GetBuilder()
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void GetBoardId()
+        {
+            int? boardId = null;
+
+        }
+
         private static void UpdateSurfboard(int surfboardId)
+        {
+            Surfboard surfboard = Repository.GetBoard(surfboardId);
+
+            string command = CommandListSurfProperties;
+
+            // If the current command doesn't equal the "Cancel" command 
+            // then evaluate and process the command.
+            while (command != CommandCancel)
+            {
+                switch (command)
+                {
+                    case CommandListSurfProperties:
+                        ListSurfboardProperties(surfboard);
+                        break;
+                    case CommandSave:
+                        Repository.UpdateSurfboard(surfboard);
+                        command = CommandCancel;
+                        continue;
+                    default:
+                        if (AttemptUpdateSurfboardProperty(command, surfboard))
+                        {
+                            command = CommandListSurfProperties;
+                            continue;
+                        }
+                        else
+                        {
+                            ConsoleHelper.OutputLine("Sorry, but I didn't understand that command.");
+                        }
+                        break;
+                }
+
+                // List the available commands.
+                ConsoleHelper.OutputBlankLine();
+                ConsoleHelper.Output("Commands: ");
+                if (EditableProperties.Count > 0)
+                {
+                    ConsoleHelper.Output("Enter a Number 1-{0}, ", EditableProperties.Count);
+                }
+                ConsoleHelper.OutputLine("S - Save, C - Cancel", false);
+
+                // Get the next command from the user.
+                command = ConsoleHelper.ReadInput("Enter a Command: ", true);
+            }
+            ConsoleHelper.ClearOutput();
+        }
+
+        private static bool AttemptUpdateSurfboardProperty(string command, Surfboard surfboard)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void ListSurfboardProperties(Surfboard surfboard)
         {
             throw new NotImplementedException();
         }
