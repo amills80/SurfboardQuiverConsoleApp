@@ -212,7 +212,7 @@ namespace SurfboardQuiverConsoleApp
                 ConsoleHelper.OutputLine("{0}) {1}", surfBoards.IndexOf(s) + 1, s.DisplayText);
             }
             
-            // get values input from user.
+            //// TODO: get values input from user.
 
             var surfBoard = new Surfboard();
             //surfBoard.Id = GetBoardId();
@@ -227,28 +227,50 @@ namespace SurfboardQuiverConsoleApp
 
         private static BoardStyle GetBoardStyle()
         {
-            throw new NotImplementedException();
+            ConsoleHelper.OutputBlankLine();
+            Console.WriteLine("Enter Board Style:");
+            string style = Console.Read().ToString();
+            BoardStyle styleName = new BoardStyle();
+            //// TODO: create a redundancy check for if boardstyle already exists.
+            //// If exists, return matching style. If not, create new one.
+            //if ()
+            styleName.Name = style;
+            return styleName;
         }
 
         private static float GetBoardLength()
         {
-            throw new NotImplementedException();
+            ConsoleHelper.OutputBlankLine();
+            Console.WriteLine("Enter Board Length:");
+            float length = Console.Read();
+            return length;
         }
 
         private static string GetModel()
         {
-            throw new NotImplementedException();
+            ConsoleHelper.OutputBlankLine();
+            Console.WriteLine("Enter Model Name:");
+            string model = Console.Read().ToString();
+            return model;
         }
 
         private static Builder GetBuilder()
         {
-            throw new NotImplementedException();
+            ConsoleHelper.OutputBlankLine();
+            Console.WriteLine("Enter Builder Name:");
+            Builder builder = new Builder();
+            //// TODO: create a redundancy check for if boardstyle already exists.
+            //// If exists, return matching style. If not, create new one.
+            //if ()
+
+            string name = Console.Read().ToString();
+            builder.Name = name;
+            return builder;
         }
 
         private static void GetBoardId()
         {
             int? boardId = null;
-
         }
 
         private static void UpdateSurfboard(int surfboardId)
@@ -308,9 +330,25 @@ namespace SurfboardQuiverConsoleApp
             throw new NotImplementedException();
         }
 
+        //TODO : This is next
         private static bool DeleteSurfBoard(int surfboardId)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            var successful = false;
+
+            // Prompt the user if they want to continue with deleting this comic book.
+            string input = ConsoleHelper.ReadInput(
+                "Are you sure you want to delete this comic book (Y/N)? ", true);
+
+            // If the user entered "y", then delete the comic book.
+            if (input == "y")
+            {
+                Repository.DeleteSurfboard(surfboardId);
+                successful = true;
+            }
+
+            return successful;
+
         }
     }
 }

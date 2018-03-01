@@ -123,6 +123,7 @@ namespace SurfboardQuiverConsoleApp.Models
             {
                 var surfboard = new Surfboard() { Id = surfboardId };
                 context.Entry(surfboard).State = EntityState.Deleted;
+                context.SaveChanges();
             }
         }
 
