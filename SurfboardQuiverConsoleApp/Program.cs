@@ -27,7 +27,12 @@ namespace SurfboardQuiverConsoleApp
         // Properties that can become readOnly, should be identified, here:
         readonly static List<string> EditableProperties = new List<string>()
         {
-
+            "Make",
+            "Model",
+            "Shape", 
+            "Length",
+            "Description"
+            
         };
 
         static void Main(string[] args)
@@ -171,7 +176,7 @@ namespace SurfboardQuiverConsoleApp
             }
             //throw new NotImplementedException();
         }
-        
+
         private static void ListSurfboard(int surfboardId)
         {
             Surfboard surfboard = Repository.GetBoard(surfboardId);
@@ -194,7 +199,7 @@ namespace SurfboardQuiverConsoleApp
             //{
             //    ConsoleHelper.OutputLine(surfboard.Notes);
             //}
-                        
+
             ConsoleHelper.OutputLine("");
             //throw new NotImplementedException();
         }
@@ -211,7 +216,7 @@ namespace SurfboardQuiverConsoleApp
             {
                 ConsoleHelper.OutputLine("{0}) {1}", surfBoards.IndexOf(s) + 1, s.DisplayText);
             }
-            
+
             //// TODO: get values input from user.
 
             var surfBoard = new Surfboard();
@@ -220,7 +225,7 @@ namespace SurfboardQuiverConsoleApp
             surfBoard.Model = GetModel();
             surfBoard.Length = GetBoardLength();
             surfBoard.Style = GetBoardStyle();
-            
+
             // Add the surfboard to the database.
             Repository.AddSurfboard(surfBoard);
         }
@@ -244,6 +249,14 @@ namespace SurfboardQuiverConsoleApp
             Console.WriteLine("Enter Board Length:");
             float length = Console.Read();
             return length;
+        }
+
+        private static string GetBoardNotes()
+        {
+            ConsoleHelper.OutputBlankLine();
+            Console.WriteLine("Enter Board Description:");
+            string notes = Console.Read().ToString();
+            return notes;
         }
 
         private static string GetModel()
@@ -322,18 +335,125 @@ namespace SurfboardQuiverConsoleApp
 
         private static bool AttemptUpdateSurfboardProperty(string command, Surfboard surfboard)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            {
+                var successful = false;
+
+                // Attempt to parse the command to a line number.
+                int lineNumber = 0;
+                int.TryParse(command, out lineNumber);
+
+                // If the number is within range then get that comic book ID.
+                if (lineNumber > 0 && lineNumber <= EditableProperties.Count)
+                {
+                    // Retrieve the property name for the provided line number.
+                    string propertyName = EditableProperties[lineNumber - 1];
+
+                    // Switch on the provided property name and call the 
+                    // associated user input method for that property name.
+                    switch (propertyName)
+                    {
+                        case "Make":
+                            // TODO: GetBuilderID is incomplete
+                            //comicBook.SeriesId = GetSeriesId();
+                            //comicBook.Series = Repository.GetSeries(comicBook.SeriesId);
+                            surfboard.BuilderId = GetBuilderId();
+                            surfboard.Builder = Repository.GetBuilder(surfboard.BuilderId);
+                            break;
+                        case "Model":
+                            //comicBook.IssueNumber = GetIssueNumber();
+                            surfboard.Model = GetModel();
+                            break;
+                        case "Shape":
+                            //comicBook.Description = GetDescription();
+                            surfboard.Style = GetBoardStyle();
+                            break;
+                        case "Length":
+                            surfboard.Length = GetBoardLength();
+                            break;
+                        case "Description":
+                            surfboard.Notes = GetBoardNotes();
+                            break;
+                        default:
+                            break;
+                    }
+
+                    successful = true;
+                }
+
+                return successful;
+            }
+        }
+
+        /// <summary>
+        /// Gets the builder ID from the user.
+        /// </summary>
+        /// <returns>Returns an integer for the selected builder ID.</returns>
+        private static int GetBuilderId()
+        {
+            //throw new NotImplementedException();
+           
+
+            int? builderId = null;
+            IList<Builder> builders = Repository.GetBuilders();
+
+            // While the builder ID is null, prompt the user to select a builder 
+            // from the provided list.
+            while (builderId == null)
+            {
+                ConsoleHelper.OutputBlankLine();
+
+                foreach (Builder b in builders)
+                {
+                    ConsoleHelper.OutputLine("{0}) {1}", builders.IndexOf(b) + 1, b.Name);
+                }
+
+                // Get the line number for the selected builder.
+                string lineNumberInput = ConsoleHelper.ReadInput(
+                    "Enter the line number of the builder that you want to add a surfboard to: ");
+
+                // Attempt to parse the user's input to a line number.
+                int lineNumber = 0;
+                if (int.TryParse(lineNumberInput, out lineNumber))
+                {
+                    if (lineNumber > 0 && lineNumber <= builders.Count)
+                    {
+                        builderId = builders[lineNumber - 1].Id;
+                    }
+                }
+
+                // If we weren't able to parse the provided line number 
+                // to a builder ID then display an error message.
+                if (builderId == null)
+                {
+                    ConsoleHelper.OutputLine("Sorry, but that wasn't a valid line number.");
+                }
+            }
+
+            return builderId.Value;
+
         }
 
         private static void ListSurfboardProperties(Surfboard surfboard)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            ConsoleHelper.ClearOutput();
+            ConsoleHelper.OutputLine("UPDATE SURFBOARD");
+
+            // NOTE: This list of surfboard property values 
+            // needs to match the collection of editable properties 
+            // declared at the top of this file.
+            ConsoleHelper.OutputBlankLine();
+            ConsoleHelper.OutputLine("1) Make: {0}", surfboard.Builder.Name);
+            ConsoleHelper.OutputLine("2) Model: {0}", surfboard.Model);
+            ConsoleHelper.OutputLine("3) Shape: {0}", surfboard.Style.Name);
+            ConsoleHelper.OutputLine("4) Length: {0}", surfboard.Length);
+            ConsoleHelper.OutputLine("5) Description: {0}", surfboard.Notes);
         }
 
-        //TODO : This is next
+
         private static bool DeleteSurfBoard(int surfboardId)
         {
-            //throw new NotImplementedException();
             var successful = false;
 
             // Prompt the user if they want to continue with deleting this comic book.
