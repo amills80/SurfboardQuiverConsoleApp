@@ -29,10 +29,10 @@ namespace SurfboardQuiverConsoleApp
         {
             "Make",
             "Model",
-            "Shape", 
+            "Shape",
             "Length",
             "Notes"
-            
+
         };
 
         static void Main(string[] args)
@@ -216,14 +216,13 @@ namespace SurfboardQuiverConsoleApp
             {
                 ConsoleHelper.OutputLine("{0}) {1}", surfBoards.IndexOf(s) + 1, s.DisplayText);
             }
-
             //// TODO: get values input from user.
-
             var surfBoard = new Surfboard();
             //surfBoard.Id = GetBoardId();
             surfBoard.Builder = GetBuilder();
             surfBoard.Model = GetModel();
             surfBoard.Length = GetBoardLength();
+            // TODO: Fix the style section
             surfBoard.Style = GetBoardStyle();
 
             // Add the surfboard to the database.
@@ -276,7 +275,7 @@ namespace SurfboardQuiverConsoleApp
             //// If exists, return matching style. If not, create new one.
             //if ()
 
-            string name = Console.Read().ToString();
+            string name = Console.ReadLine();
             builder.Name = name;
             return builder;
         }
@@ -343,7 +342,7 @@ namespace SurfboardQuiverConsoleApp
                 int lineNumber = 0;
                 int.TryParse(command, out lineNumber);
 
-                // If the number is within range then get that comic book ID.
+                // If the number is within range then get that surfboard ID.
                 if (lineNumber > 0 && lineNumber <= EditableProperties.Count)
                 {
                     // Retrieve the property name for the provided line number.
@@ -363,7 +362,8 @@ namespace SurfboardQuiverConsoleApp
                             break;
                         case "Shape":
                             // TODO: BoardShape/Style needs to replicate Builder methods
-                            surfboard.Style = GetBoardStyle();
+                            surfboard.BoardStyleId = GetBoardStyleId();
+                            surfboard.Style = Repository.GetBoardStyle(surfboard.BoardStyleId);
                             break;
                         case "Length":
                             surfboard.Length = GetBoardLength();
@@ -382,15 +382,50 @@ namespace SurfboardQuiverConsoleApp
             }
         }
 
+        // TODO: refactor this with GetBuilderId method
+        private static int GetBoardStyleId()
+        {
+            int? styleId = null;
+            IList<BoardStyle> shapes = Repository.GetBoardStyles();
+
+            // While StyleId is null, prompt the user to select a shape from provided list.
+            while (styleId == null)
+            {
+                ConsoleHelper.OutputBlankLine();
+                foreach (BoardStyle s in shapes)
+                {
+                    ConsoleHelper.OutputLine("{0}) {1}", shapes.IndexOf(s) + 1, s.Name);
+                }
+
+                // Get line number of selected shape.
+                string lineNumberInput = ConsoleHelper.ReadInput(
+                    "Enter the line number of the board shape you choose: ");
+
+                // Attempt to parse the user input into a line number.
+                int lineNumber = 0;
+                if (int.TryParse(lineNumberInput, out lineNumber))
+                {
+                    if (lineNumber > 0 && lineNumber <= shapes.Count)
+                    {
+                        styleId = shapes[lineNumber - 1].Id;
+                    }
+                }
+
+                // If we weren't able to parse the line number, then throw error
+                if (styleId == null)
+                {
+                    ConsoleHelper.OutputLine("Sorry, but that wasn't a valid line number.");
+                }
+            }
+            return styleId.Value;
+        }
+
         /// <summary>
         /// Gets the builder ID from the user.
         /// </summary>
         /// <returns>Returns an integer for the selected builder ID.</returns>
         private static int GetBuilderId()
         {
-            //throw new NotImplementedException();
-           
-
             int? builderId = null;
             IList<Builder> builders = Repository.GetBuilders();
 
@@ -399,7 +434,6 @@ namespace SurfboardQuiverConsoleApp
             while (builderId == null)
             {
                 ConsoleHelper.OutputBlankLine();
-
                 foreach (Builder b in builders)
                 {
                     ConsoleHelper.OutputLine("{0}) {1}", builders.IndexOf(b) + 1, b.Name);
@@ -426,9 +460,7 @@ namespace SurfboardQuiverConsoleApp
                     ConsoleHelper.OutputLine("Sorry, but that wasn't a valid line number.");
                 }
             }
-
             return builderId.Value;
-
         }
 
         private static void ListSurfboardProperties(Surfboard surfboard)
@@ -453,11 +485,11 @@ namespace SurfboardQuiverConsoleApp
         {
             var successful = false;
 
-            // Prompt the user if they want to continue with deleting this comic book.
+            // Prompt the user if they want to continue with deleting this surfboard.
             string input = ConsoleHelper.ReadInput(
-                "Are you sure you want to delete this comic book (Y/N)? ", true);
+                "Are you sure you want to delete this surfboard(Y/N)? ", true);
 
-            // If the user entered "y", then delete the comic book.
+            // If the user entered "y", then delete the surfboard.
             if (input == "y")
             {
                 Repository.DeleteSurfboard(surfboardId);
