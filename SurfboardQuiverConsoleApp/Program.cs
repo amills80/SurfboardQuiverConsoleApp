@@ -31,7 +31,7 @@ namespace SurfboardQuiverConsoleApp
             "Model",
             "Shape", 
             "Length",
-            "Description"
+            "Notes"
             
         };
 
@@ -234,7 +234,7 @@ namespace SurfboardQuiverConsoleApp
         {
             ConsoleHelper.OutputBlankLine();
             Console.WriteLine("Enter Board Style:");
-            string style = Console.Read().ToString();
+            string style = Console.ReadLine();
             BoardStyle styleName = new BoardStyle();
             //// TODO: create a redundancy check for if boardstyle already exists.
             //// If exists, return matching style. If not, create new one.
@@ -254,8 +254,8 @@ namespace SurfboardQuiverConsoleApp
         private static string GetBoardNotes()
         {
             ConsoleHelper.OutputBlankLine();
-            Console.WriteLine("Enter Board Description:");
-            string notes = Console.Read().ToString();
+            Console.Write("Enter Board Description:");
+            string notes = Console.ReadLine();
             return notes;
         }
 
@@ -263,7 +263,7 @@ namespace SurfboardQuiverConsoleApp
         {
             ConsoleHelper.OutputBlankLine();
             Console.WriteLine("Enter Model Name:");
-            string model = Console.Read().ToString();
+            string model = Console.ReadLine();
             return model;
         }
 
@@ -281,10 +281,10 @@ namespace SurfboardQuiverConsoleApp
             return builder;
         }
 
-        private static void GetBoardId()
-        {
-            int? boardId = null;
-        }
+        //private static void GetBoardId()
+        //{
+        //    int? boardId = null;
+        //}
 
         private static void UpdateSurfboard(int surfboardId)
         {
@@ -355,23 +355,20 @@ namespace SurfboardQuiverConsoleApp
                     {
                         case "Make":
                             // TODO: GetBuilderID is incomplete
-                            //comicBook.SeriesId = GetSeriesId();
-                            //comicBook.Series = Repository.GetSeries(comicBook.SeriesId);
                             surfboard.BuilderId = GetBuilderId();
                             surfboard.Builder = Repository.GetBuilder(surfboard.BuilderId);
                             break;
                         case "Model":
-                            //comicBook.IssueNumber = GetIssueNumber();
                             surfboard.Model = GetModel();
                             break;
                         case "Shape":
-                            //comicBook.Description = GetDescription();
+                            // TODO: BoardShape/Style needs to replicate Builder methods
                             surfboard.Style = GetBoardStyle();
                             break;
                         case "Length":
                             surfboard.Length = GetBoardLength();
                             break;
-                        case "Description":
+                        case "Notes":
                             surfboard.Notes = GetBoardNotes();
                             break;
                         default:
