@@ -12,25 +12,25 @@ namespace SurfboardQuiverConsoleApp
     {
         protected override void Seed(Context context)
         {
-            context.Surfboards.Add(new Surfboard()
-            {
-                Builder = new Builder()
-                {
-                    Name = "Bird",
-                    //Id = 1
-                },
-                Model = "Flat T",
-                Style = new BoardStyle()
-                {
-                    Name = "Longboard",
-                    //Id = 1
-                },
-                Length = 9.0f,
-                Width = 23.0f,
-                MaxFins = 3,
-                //Rating = 4.0f,
-                Notes = "Rides on almost any Florida beach break"
-            });
+            //context.Surfboards.Add(new Surfboard()
+            //{
+            //    Builder = new Builder()
+            //    {
+            //        Name = "Bird",
+            //        //Id = 1
+            //    },
+            //    Model = "Flat T",
+            //    Style = new BoardStyle()
+            //    {
+            //        Name = "Longboard",
+            //        Id = 1
+            //    },
+            //    Length = 9.0f,
+            //    Width = 23.0f,
+            //    MaxFins = 3,
+            //    //Rating = 4.0f,
+            //    Notes = "Rides on almost any Florida beach break"
+            //});
             context.Surfboards.Add(new Surfboard()
             {
                 Builder = new Builder()
@@ -42,7 +42,7 @@ namespace SurfboardQuiverConsoleApp
                 Style = new BoardStyle()
                 {
                     Name = "Longboard",
-                    //Id = 1
+                    Id = 1
                 },
                 Length = 10.1f,
                 Width = 22.5f,

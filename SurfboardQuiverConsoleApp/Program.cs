@@ -186,19 +186,20 @@ namespace SurfboardQuiverConsoleApp
 
             ConsoleHelper.OutputLine(surfboard.DisplayText);
 
-            //// TODO use as source for below section of console output content
+            //// TODO: use as source for below section of console output content
             ////ConsoleHelper.OutputLine("Published On: {0}", comicBook.PublishedOn.ToShortDateString());
             ////ConsoleHelper.OutputLine("Average Rating: {0}",
             ////    comicBook.AverageRating != null ?
             ////    comicBook.AverageRating.Value.ToString("n2") : "N/A");
 
-            ////Add boardStyle.name
-            //ConsoleHelper.OutputBlankLine();
-            ////Add rating
-            //if (!string.IsNullOrWhiteSpace(surfboard.Notes))
-            //{
-            //    ConsoleHelper.OutputLine(surfboard.Notes);
-            //}
+            //// TODO: Add boardStyle.name
+            ConsoleHelper.OutputLine(surfboard.Style.Name);
+            //// TODO: Add rating
+            if (!string.IsNullOrWhiteSpace(surfboard.Notes))
+            {
+                ConsoleHelper.OutputLine("Summary: ");
+                ConsoleHelper.OutputLine(surfboard.Notes);
+            }
 
             ConsoleHelper.OutputLine("");
             //throw new NotImplementedException();
@@ -216,14 +217,36 @@ namespace SurfboardQuiverConsoleApp
             {
                 ConsoleHelper.OutputLine("{0}) {1}", surfBoards.IndexOf(s) + 1, s.DisplayText);
             }
-            //// TODO: get values input from user.
+            //// Get values input from user.
             var surfBoard = new Surfboard();
+            // TODO: create duplicate shaper verification <HERE>
+
             //surfBoard.Id = GetBoardId();
             surfBoard.Builder = GetBuilder();
             surfBoard.Model = GetModel();
             surfBoard.Length = GetBoardLength();
-            // TODO: Fix the style section
             surfBoard.Style = GetBoardStyle();
+            BoardStyle shapeInput = GetBoardStyle();
+
+            //// TODO: move duplicate boardshape verification <HERE>
+            //// TODO: refactor this into its own interface (and recycle with Shaper validations)
+            //bool newShape = true;
+            //foreach (BoardStyle s in shapes)
+            //{
+            //    if (s.Name.ToLower() == shapeInput.ToLower())
+            //    {
+            //        newShape = false;
+            //        surfBoard.Style = s;
+            //    }
+            //}
+            //if (newShape)
+            //{
+            //    styleInput.Name = style;
+            //    styleInput.Id = shapes.Count() + 1;
+            //    Repository.AddBoardStyle(shapeInput);
+            //}
+
+            // TODO: add a GetBoardDescription() method; 
 
             // Add the surfboard to the database.
             Repository.AddSurfboard(surfBoard);
@@ -234,19 +257,21 @@ namespace SurfboardQuiverConsoleApp
             ConsoleHelper.OutputBlankLine();
             Console.WriteLine("Enter Board Style:");
             string style = Console.ReadLine();
-            BoardStyle styleName = new BoardStyle();
+
             //// TODO: create a redundancy check for if boardstyle already exists.
             //// If exists, return matching style. If not, create new one.
-            //if ()
-            styleName.Name = style;
-            return styleName;
+            IList<BoardStyle> shapes = Repository.GetBoardStyles();
+            BoardStyle styleInput = new BoardStyle();
+
+            return styleInput;
         }
+
 
         private static float GetBoardLength()
         {
             ConsoleHelper.OutputBlankLine();
             Console.WriteLine("Enter Board Length:");
-            float length = Console.Read();
+            float length = float.Parse(Console.ReadLine());
             return length;
         }
 
@@ -417,7 +442,7 @@ namespace SurfboardQuiverConsoleApp
                     ConsoleHelper.OutputLine("Sorry, but that wasn't a valid line number.");
                 }
             }
-            return styleId.Value;
+            return (int)styleId;
         }
 
         /// <summary>

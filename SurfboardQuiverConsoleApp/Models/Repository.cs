@@ -127,5 +127,9 @@ namespace SurfboardQuiverConsoleApp.Models
             }
         }
 
+        internal static void AddBoardStyle(BoardStyle shapeInput)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
