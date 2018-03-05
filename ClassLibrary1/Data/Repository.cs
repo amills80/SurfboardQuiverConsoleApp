@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SurfboardQuiverConsoleApp.Models
 {
-    class Repository
+    public class Repository
     {
         static Context GetContext()
         {
