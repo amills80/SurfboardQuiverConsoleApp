@@ -50,11 +50,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\ConsoleHelper.cs" />
-    <Compile Include="Models\Context.cs" />
-    <Compile Include="Models\DatabaseInitializer.cs" />
+    <Compile Include="Data\Context.cs" />
+    <Compile Include="Data\DatabaseInitializer.cs" />
     <Compile Include="Models\BoardStyle.cs" />
     <Compile Include="Models\Builder.cs" />
-    <Compile Include="Models\Repository.cs" />
+    <Compile Include="Data\Repository.cs" />
     <Compile Include="Models\Surfboard.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
