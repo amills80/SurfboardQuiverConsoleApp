@@ -226,14 +226,15 @@ namespace SurfboardQuiverConsoleApp
             surfBoard.Model = GetModel();
             surfBoard.Length = GetBoardLength();
             surfBoard.Style = GetBoardStyle();
-            BoardStyle shapeInput = GetBoardStyle();
-
-            //// TODO: move duplicate boardshape verification <HERE>
+            
+            //// TODO: erase this validation, as it is a part of the addSurfboard() method in the repo file.
             //// TODO: refactor this into its own interface (and recycle with Shaper validations)
             //bool newShape = true;
+            //IList<BoardStyle> shapes = Repository.GetBoardStyles();
+            //BoardStyle styleInput = new BoardStyle();
             //foreach (BoardStyle s in shapes)
             //{
-            //    if (s.Name.ToLower() == shapeInput.ToLower())
+            //    if (s.Name.ToLower() == inputShape.ToLower())
             //    {
             //        newShape = false;
             //        surfBoard.Style = s;
@@ -241,11 +242,12 @@ namespace SurfboardQuiverConsoleApp
             //}
             //if (newShape)
             //{
-            //    styleInput.Name = style;
+            //    styleInput.Name = inputShape;
             //    styleInput.Id = shapes.Count() + 1;
-            //    Repository.AddBoardStyle(shapeInput);
+            //    //Repository.AddBoardStyle(styleInput);
+            //    surfBoard.Style = styleInput;
             //}
-
+            surfBoard.Notes = GetBoardNotes();
             // TODO: add a GetBoardDescription() method; 
 
             // Add the surfboard to the database.
@@ -256,17 +258,12 @@ namespace SurfboardQuiverConsoleApp
         {
             ConsoleHelper.OutputBlankLine();
             Console.WriteLine("Enter Board Style:");
-            string style = Console.ReadLine();
-
-            //// TODO: create a redundancy check for if boardstyle already exists.
-            //// If exists, return matching style. If not, create new one.
-            IList<BoardStyle> shapes = Repository.GetBoardStyles();
-            BoardStyle styleInput = new BoardStyle();
-
-            return styleInput;
+            string input = Console.ReadLine();
+            BoardStyle style = new BoardStyle();
+            style.Name = input;
+            return style;
         }
-
-
+        
         private static float GetBoardLength()
         {
             ConsoleHelper.OutputBlankLine();
@@ -278,7 +275,7 @@ namespace SurfboardQuiverConsoleApp
         private static string GetBoardNotes()
         {
             ConsoleHelper.OutputBlankLine();
-            Console.Write("Enter Board Description:");
+            Console.Write("Enter Board Summary:");
             string notes = Console.ReadLine();
             return notes;
         }
@@ -296,20 +293,11 @@ namespace SurfboardQuiverConsoleApp
             ConsoleHelper.OutputBlankLine();
             Console.WriteLine("Enter Builder Name:");
             Builder builder = new Builder();
-            //// TODO: create a redundancy check for if boardstyle already exists.
-            //// If exists, return matching style. If not, create new one.
-            //if ()
-
-            string name = Console.ReadLine();
-            builder.Name = name;
+            string input = Console.ReadLine();
+            builder.Name = input;
             return builder;
         }
-
-        //private static void GetBoardId()
-        //{
-        //    int? boardId = null;
-        //}
-
+        
         private static void UpdateSurfboard(int surfboardId)
         {
             Surfboard surfboard = Repository.GetBoard(surfboardId);

@@ -127,9 +127,17 @@ namespace SurfboardQuiverConsoleApp.Models
             }
         }
 
-        internal static void AddBoardStyle(BoardStyle shapeInput)
-        {
-            throw new NotImplementedException();
-        }
+        //public static void AddBoardStyle(BoardStyle shapeInput)
+        //{
+        //    using (Context context = GetContext())
+        //    {
+        //        context.BoardStyles.Add(shapeInput);
+        //        if (shapeInput.Name != null && shapeInput.Id > 0)
+        //        {
+        //            context.Entry(shapeInput.Name).State = EntityState.Unchanged;
+        //        }
+        //        context.SaveChanges();
+        //    }
+        //}
     }
 }
