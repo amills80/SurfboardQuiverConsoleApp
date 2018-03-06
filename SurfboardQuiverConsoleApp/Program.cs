@@ -219,37 +219,18 @@ namespace SurfboardQuiverConsoleApp
             }
             //// Get values input from user.
             var surfBoard = new Surfboard();
-            // TODO: create duplicate shaper verification <HERE>
 
             //surfBoard.Id = GetBoardId();
             surfBoard.Builder = GetBuilder();
+            surfBoard.Builder.Id = Repository.GetBuilderId(surfBoard.Builder);
+            
             surfBoard.Model = GetModel();
             surfBoard.Length = GetBoardLength();
             surfBoard.Style = GetBoardStyle();
-            
-            //// TODO: erase this validation, as it is a part of the addSurfboard() method in the repo file.
-            //// TODO: refactor this into its own interface (and recycle with Shaper validations)
-            //bool newShape = true;
-            //IList<BoardStyle> shapes = Repository.GetBoardStyles();
-            //BoardStyle styleInput = new BoardStyle();
-            //foreach (BoardStyle s in shapes)
-            //{
-            //    if (s.Name.ToLower() == inputShape.ToLower())
-            //    {
-            //        newShape = false;
-            //        surfBoard.Style = s;
-            //    }
-            //}
-            //if (newShape)
-            //{
-            //    styleInput.Name = inputShape;
-            //    styleInput.Id = shapes.Count() + 1;
-            //    //Repository.AddBoardStyle(styleInput);
-            //    surfBoard.Style = styleInput;
-            //}
-            surfBoard.Notes = GetBoardNotes();
-            // TODO: add a GetBoardDescription() method; 
+            surfBoard.Style.Id = Repository.GetBoardStyleId(surfBoard.Style);
 
+            surfBoard.Notes = GetBoardNotes();
+            
             // Add the surfboard to the database.
             Repository.AddSurfboard(surfBoard);
         }

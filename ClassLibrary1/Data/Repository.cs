@@ -69,6 +69,19 @@ namespace SurfboardQuiverConsoleApp.Models
             }
         }
 
+        public static int GetBuilderId(Builder builder)
+        {
+            using (Context context = GetContext())
+            {
+                var builders = GetBuilders();
+                bool BuilderExists = builders.ToList()
+                                    .Exists(b => b.Name.ToLower() == builder.Name.ToLower());
+                var buildId = (BuilderExists) ?
+                        (builders.FirstOrDefault(b => b.Name == builder.Name).Id) : 0;
+                return buildId;
+            }
+        }
+
         public static IList<BoardStyle> GetBoardStyles()
         {
             using (Context context = GetContext())
@@ -89,17 +102,35 @@ namespace SurfboardQuiverConsoleApp.Models
                     .SingleOrDefault();
             }
         }
+        
+        public static int GetBoardStyleId(BoardStyle style)
+        {
+            using (Context context = GetContext())
+            {
+                var shapes = GetBoardStyles();
+                bool ShapeExists = shapes.ToList()
+                                    .Exists(b => b.Name.ToLower() == style.Name.ToLower());
+                var styleId = (ShapeExists) ?
+                        (shapes.FirstOrDefault(b => b.Name == style.Name).Id) : 0;
+                return styleId;
+            }
+            //throw new NotImplementedException();
+        }
 
         public static void AddSurfboard(Surfboard surfboard)
         {
             using (Context context = GetContext())
             {
+                //IList<BoardStyle> shapes = GetBoardStyles();
+
                 context.Surfboards.Add(surfboard);
-                if(surfboard.Builder != null && surfboard.Builder.Id > 0)
+                // TODO: add Builder duplication val in this if clause
+                if (surfboard.Builder != null && surfboard.Builder.Id > 0)
                 {
                     context.Entry(surfboard.Builder).State = EntityState.Unchanged;
                 }
-                if(surfboard.Style != null && surfboard.Style.Id > 0)
+                // TODO: add Style duplication val in this if clause
+                if (surfboard.Style != null && surfboard.Style.Id > 0)
                 {
                     context.Entry(surfboard.Style).State = EntityState.Unchanged;
                 }
@@ -126,7 +157,7 @@ namespace SurfboardQuiverConsoleApp.Models
                 context.SaveChanges();
             }
         }
-
+        
         //public static void AddBoardStyle(BoardStyle shapeInput)
         //{
         //    using (Context context = GetContext())
