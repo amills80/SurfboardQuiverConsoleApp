@@ -10,7 +10,6 @@ using SurfboardQuiverConsoleApp.Helpers;
 
 namespace SurfboardQuiverConsoleApp
 {
-
     class Program
     {
         // console character commands to navigate through the application

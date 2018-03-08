@@ -47,12 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\Context.cs" />
-    <Compile Include="Data\DatabaseInitializer.cs" />
-    <Compile Include="Data\Repository.cs" />
-    <Compile Include="Models\BoardStyle.cs" />
-    <Compile Include="Models\Builder.cs" />
-    <Compile Include="Models\Surfboard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -49,7 +49,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Context.cs" />
+    <Compile Include="Data\DatabaseInitializer.cs" />
+    <Compile Include="Data\Repository.cs" />
     <Compile Include="Helpers\ConsoleHelper.cs" />
+    <Compile Include="Migrations\201803042108149_InitialCreate.cs" />
+    <Compile Include="Migrations\201803042108149_InitialCreate.Designer.cs">
+      <DependentUpon>201803042108149_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\BoardStyle.cs" />
+    <Compile Include="Models\Builder.cs" />
+    <Compile Include="Models\Surfboard.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -64,6 +75,11 @@
       <Project>{ffb35b78-2480-43ab-96cf-24ea08148080}</Project>
       <Name>SurfboardQuiverShared</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201803042108149_InitialCreate.resx">
+      <DependentUpon>201803042108149_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

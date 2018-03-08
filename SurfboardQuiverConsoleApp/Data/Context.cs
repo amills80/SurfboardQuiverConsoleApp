@@ -14,9 +14,13 @@ namespace SurfboardQuiverConsoleApp
     {
         public Context()
         {
-            Database.SetInitializer(new DatabaseInitializer());
-            //Database.SetInitializer(new DropCreateDatabaseIfModelChanges<Context>());
-            //Database.SetInitializer(new DropCreateDatabaseAlways<Context>());
+            //// Disable Initializers below on behalf of EF Migrations initializer
+            //Database.SetInitializer(new DatabaseInitializer());
+
+            Database.SetInitializer<Context>(null);
+
+            ////Database.SetInitializer(new DropCreateDatabaseIfModelChanges<Context>());
+            ////Database.SetInitializer(new DropCreateDatabaseAlways<Context>());
         }
 
         public DbSet<Surfboard> Surfboards { get; set; }
@@ -27,11 +31,6 @@ namespace SurfboardQuiverConsoleApp
         {
             //base.OnModelCreating(modelBuilder);
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-
-            // TODO: may not use, since rating is now a float
-            //modelBuilder.Entity<Surfboard>()
-            //    .Property(sb => sb.Rating)
-            //    .hasPrecision(4.2);
         }
     }
 }
